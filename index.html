@@ -1,0 +1,128 @@
+<html lang="en">
+<!--HEAVILY INSPIRED BY GD COLON!-->
+<head>
+    <meta name="theme-color" content="#98E8CD">
+    <script type="text/javascript" src="./assets/portfolio.js" charset="UTF-8"></script>
+    <title>Withicality</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="Withicality">
+    <meta property="og:description" content="minecrafter, dasher, programmer">
+    <meta property="og:type" content="website">
+    <meta name="og:image" itemprop="image" content="http:/www.itswithermc.tk/assets/png/itswithermc.png">
+    <link rel="icon" href="./assets/withicality.png"></link>
+    <link rel="stylesheet" href="./assets/index.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+
+<body style="text-align: center">
+    <div id="header"></div>
+    <div class="box nameBox">
+        <p style="line-height: 34px; font-weight: bold; max-width: 400px; margin: 20 auto; font-size: 26px;">Hi there!
+            My name is Withicality. I'm a dickhead and I make random programs in my freetime.</p>
+        <img src="./assets/itswithermc.png" style="width: 250px;pointer-events:none">
+    </div>
+
+    <div class="box" id="videos">
+        <h2>Videos!</h2>
+        <p>I don't have any plans on uploading at the moment.<br>
+        While you're here, consider checking out my friends' channel.</p>
+        <div id="playlists" class="sidescroll" style="margin: 0 12">
+            <div class="videoBox" caption="Daniezthrox" playlist="UU4RiDLZvwcUU2gl-3aF_44Q"></div><!--
+         --><div class="videoBox" caption='Jared "JTArts" Tsvetkov' playlist="UUnFwI0ob5Ds7fEWigQo3zSA"></div><!--
+         --><div class="videoBox" caption="CosmicAnimations" playlist="UU0C5NLDsOOad7BXl3mqYbLw"></div>
+        </div>
+    </div>
+
+    <!--
+    <div class="box" id="projects">
+        <h2>Stuff I've made</h2>
+        <button bg="128,64,0" id="featured" type="featured" class="tab selected">Featured</button><!--
+        <button bg="128,64,0" type="plugin" class="tab">Spigot Plugins</button><!--
+        <br>
+
+        <div id="portfolio"></div><br>
+    </div>
+    -->
+
+    <div class="box" style="margin-top: 20px; margin-bottom: 10px;">
+        <p class="small" style="margin: 10 0 15 0">Any suggestion? Reach me here:</p>
+        <a class="linkButton" href="https://twitter.com/messages/compose?recipient_id=1131430396326027269"><button
+                tabindex="-1" style="width: 150px; background-color: #1DA1F2">Twitter DMs</button></a>
+        <!--
+       --><button class="tabScale" id="showEmail" style="width: 150px; background-color: #696969">Email</button>
+        <p class="small" id="myEmail" style="height: 20px; font-size: 16px; margin-top: 12px; margin-bottom: 0px"></p>
+    </div>
+
+    <p class="creditText">
+        Heavily inspired by: <span class="colon">GDColon</span><br>
+    </p>
+</body>
+
+</html>
+
+<script>
+
+    function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]] } return a; }
+    function choose(arr) { return arr[Math.floor(Math.random() * arr.length)] }
+
+    let mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))
+
+    function brighten(col) {
+        return col.replace(/128/g, "255").replace(/64/g, "128")
+    }
+
+    function colorTabs() {
+        $('.tab').each(function () {
+            let tab = $(this)
+            let tabBG = tab.attr('bg')
+            if (tab.hasClass('selected')) tab.css('background-color', `rgba(${brighten(tabBG)}, 0.75)`)
+            else tab.css('background-color', `rgba(${tabBG}, 0.5)`)
+        })
+    }
+
+    //header!
+    fetch("./header.html").then(resp => resp.text()).then(header => $("#header").html(header))
+
+    // create video playlists
+    $('.videoBox').each(function () {
+        let playlist = $(this)
+        $(this).append(`<a target="_blank" href="https://www.youtube.com/playlist?list=${playlist.attr('playlist')}"><p style="color: aqua"; class="small">${playlist.attr('caption')}</p></a>
+       <iframe src="https://www.youtube.com/embed/videoseries?list=${playlist.attr('playlist')}" frameborder="1"
+       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="ytlink"></iframe>`)
+    })
+
+    let playlists = $('#playlists')
+    playlists.scrollLeft((playlists[0].scrollWidth - playlists.width()) / 2)
+
+    $(document).on('click', '.tab', function () {
+        $("#portfolio").html("")
+        let type = $(this).attr('type')
+        $(".tab").removeClass("selected")
+        $(this).addClass("selected")
+        colorTabs()
+        let stuff = (type == "featured") ? portfolio.filter(x => x.featured).sort(function (a, b) { return a.featured - b.featured }) : portfolio.filter(x => x.type == type)
+        stuff.forEach(x => $("#portfolio").append(`<a class="thingLink${mobile ? " mobile" : ""}" target="_blank" href="${x.link}">
+             <div tabindex=-1 class="thing" style="background-color: rgba(${($('.selected').attr('bg'))}, 0.75)">
+             <p${!mobile && x.titleSize ? ` style="font-size: ${x.titleSize}px"` : ""} class="thingTitle">${x.icon == null ? "" : `<img src="portfolio/${x.icon}.png">`}${x.name.replace(/^\*/, "")}</p>
+             <p class="thingInfo smaller">${x.description}</p>
+          </div></a>`))
+    })
+
+    $(document).on('focus', '.thing', function () {
+        $(this).parent('a').focus()
+    })
+
+    $("#featured").trigger('click')
+
+    $('#showEmail').click(function () {
+        let mail = ['Please no spam <3', 'Why not', 'Amogus']
+        if ($('#myEmail').text()) $('#myEmail').text("")
+        else $('#myEmail').html(`My email is <span style="color: #98E8CD">itswithermc[at]gmail.com</span>. ${choose(mail)}!`)
+    })
+
+    $(".colon").click(function () {
+        window.open("https://gdcolon.com/")
+    })
+
+</script>
