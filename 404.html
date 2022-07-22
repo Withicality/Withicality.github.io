@@ -8,20 +8,20 @@
     <meta property="og:description" content="{{CODE_MSG}}">
     <meta property="og:type" content="website">
     <meta name="og:image" itemprop="image" content="http:/www.itswithermc.tk/assets/png/itswithermc.png">
-    <link rel="icon" href="{{HOST}}/assets/png/withicality.png"></link>
-    <link rel="stylesheet" href="./assets/index.css">
+    <link rel="icon" href="https://withicality.github.io/assets/png/withicality.png"></link>
+    <link rel="stylesheet" href="https://withicality.github.io/assets/index.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <title>Withicality - 404: Not Found</title>
-    <link rel="stylesheet" href="./assets/404.css">
+    <link rel="stylesheet" href="https://withicality.github.io/assets/404.css">
 </head>
 
 <body>
     <div id="header"></div>
     <div class="glitch" data-text="404" style="font-size: 150px;">404</div>
-    <div class="glitch" data-text="{{CODE_SLANG}}" style="font-size: 20px;" id="txt">{{CODE_SLANG}}</div>
+    <div class="glitch" data-text="Enable javascript!" style="font-size: 20px;" id="txt">Enable javascript!</div>
     <script>
-        fetch("./header.html").then(resp => resp.text()).then(header => $("#header").html(header))
-        fetch("./assets/slang.json").then(resp => resp.json()).then(json => {
+        fetch("https://withicality.github.io/header.html").then(resp => resp.text()).then(header => $("#header").html(header))
+        fetch("https://withicality.github.io/assets/slang.json").then(resp => resp.json()).then(json => {
             const arr = json["404"]
             const slang = arr[Math.floor(Math.random() * arr.length)]
             $("#txt").attr("data-text", slang)
