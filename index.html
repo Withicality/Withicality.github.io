@@ -82,7 +82,7 @@
     }
 
     //header!
-    fetch("./header.html").then(resp => resp.text()).then(header => $("#header").html(header))
+    fetch("/header.html").then(resp => resp.text()).then(header => $("#header").html(header))
 
     // create video playlists
     $('.videoBox').each(function () {
